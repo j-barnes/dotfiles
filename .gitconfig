@@ -1,0 +1,6 @@
+[core]
+	autocrlf = input
+
+[user]
+    name = jordan.barnes
+    email = jordan.barnes@njcourts.gov
