@@ -41,5 +41,8 @@ echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
 echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zshrc
 echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
+# create symlink to home for dotfiles
+sudo ln -fs /home/codespace /workspaces/.codespaces/.persistedshare/dotfiles/.
+
 # copy dotfiles into ddev homeadditions
 sudo docker cp /workspaces/.codespaces/.persistedshare/dotfiles/. ddev-njcourts-web:/var/www/html/.ddev/homeadditions
