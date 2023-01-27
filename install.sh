@@ -42,4 +42,4 @@ echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zs
 echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
 # copy dotfiles into ddev homeadditions
-sudo docker cp /workspaces/.codespaces/.persistedshare/dotfiles/. ddev-njcourts-web:/var/www/html/.ddev/homeadditions
+# sudo docker cp /workspaces/.codespaces/.persistedshare/dotfiles/. ddev-njcourts-web:/var/www/html/.ddev/homeadditions
