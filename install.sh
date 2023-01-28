@@ -43,9 +43,7 @@ echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
 # copy dotfiles into ddev homeadditions
 # sudo docker cp /workspaces/.codespaces/.persistedshare/dotfiles/. ddev-njcourts-web:/var/www/html/.ddev/homeadditions
-# sudo ln -fs $HOME/.oh-my-zsh ~/.ddev/homeadditions/.oh-my-zsh
-# sudo ln -fs $HOME/.p10k.zsh ~/.ddev/homeadditions/.p10k.zsh
-# sudo ln -fs $HOME/.zshrc ~/.ddev/homeadditions/.zshrc
-sudo ln -fs $HOME/.oh-my-zsh /workspaces/NJC/.ddev/.homeadditions/.oh-my-zsh
-sudo ln -fs $HOME/.p10k.zsh /workspaces/NJC/.ddev/.homeadditions/.p10k.zsh
-sudo ln -fs $HOME/.zshrc /workspaces/NJC/.ddev/.homeadditions/.zshrc
+
+sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
+sudo ln -fs $HOME/.p10k.zsh $HOME/.ddev/homeadditions/.p10k.zsh
+sudo ln -fs $HOME/.zshrc $HOME/.ddev/homeadditions/.zshrc
