@@ -1,11 +1,11 @@
 #!/bin/sh
 # git rm --cached install.sh && git add install.sh --chmod=+x
 
-echo "==========================================================="
-echo "             installing .oh-my-zsh                        "
-echo "-----------------------------------------------------------"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
-sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
+# echo "==========================================================="
+# echo "             installing .oh-my-zsh                        "
+# echo "-----------------------------------------------------------"
+# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
+# sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
 
 zshrc() {
     echo "==========================================================="
