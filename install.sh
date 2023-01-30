@@ -8,7 +8,6 @@
 # sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
 
 zshrc() {
-    echo ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
     echo "==========================================================="
     echo "             cloning zsh-autosuggestions                   "
     echo "-----------------------------------------------------------"
