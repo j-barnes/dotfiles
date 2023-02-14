@@ -1,12 +1,6 @@
 #!/bin/sh
 # git rm --cached install.sh && git add install.sh --chmod=+x
 
-# echo "==========================================================="
-# echo "             installing .oh-my-zsh                        "
-# echo "-----------------------------------------------------------"
-# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
-# sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
-
 zshrc() {
     echo "==========================================================="
     echo "             cloning zsh-autosuggestions                   "
@@ -47,9 +41,17 @@ echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
 echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zshrc
 echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
-# copy dotfiles into ddev homeadditions
-# sudo docker cp /workspaces/.codespaces/.persistedshare/dotfiles/. ddev-njcourts-web:/var/www/html/.ddev/homeadditions
+# fix permissions
+sudo chmod -R g-s $HOME/.oh-my-zsh
 
+# symlink to ddev homeadditions to they get copied into container
 sudo ln -fs $HOME/.p10k.zsh $HOME/.ddev/homeadditions/.p10k.zsh
 sudo ln -fs $HOME/.zshrc $HOME/.ddev/homeadditions/.zshrc
-sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/.oh-my-zsh
+# sudo ln -fs $HOME/.gitconfig $HOME/.ddev/homeadditions/.gitconfig
+sudo ln -fs $HOME/.bashrc $HOME/.ddev/homeadditions/.bashrc
+sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/
+sudo ln -fs $HOME/config.local.yaml $HOME/.ddev/homeadditions/config.local.yaml
+
+sudo chown -R codespace:codespace $HOME/.ddev/homeadditions
+
+ddev restart
