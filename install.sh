@@ -3,6 +3,26 @@
 
 zshrc() {
     echo "==========================================================="
+    echo "             installing .oh-my-zsh                         "
+    echo "-----------------------------------------------------------"
+    git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh
+    echo "==========================================================="
+    echo "             import zshrc                                  "
+    echo "-----------------------------------------------------------"
+    cat .zshrc > $HOME/.zshrc
+    echo "==========================================================="
+    echo "             import powerlevel10k                          "
+    echo "-----------------------------------------------------------"
+    cat .p10k.zsh > $HOME/.p10k.zsh
+    echo "==========================================================="
+    echo "             import bashrc                                 "
+    echo "-----------------------------------------------------------"
+    cat .bashrc > $HOME/.bashrc
+    echo "==========================================================="
+    echo "             import gitconfig                              "
+    echo "-----------------------------------------------------------"
+    cat .gitconfig > $HOME/.gitconfig
+    echo "==========================================================="
     echo "             cloning zsh-autosuggestions                   "
     echo "-----------------------------------------------------------"
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -18,14 +38,18 @@ zshrc() {
     echo "             cloning powerlevel10k                         "
     echo "-----------------------------------------------------------"
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    echo "==========================================================="
-    echo "             import zshrc                                  "
-    echo "-----------------------------------------------------------"
-    sudo ln -fs $PWD/.zshrc $HOME/.zshrc
-    echo "==========================================================="
-    echo "             import powerlevel10k                          "
-    echo "-----------------------------------------------------------"
-    sudo ln -fs $PWD/.p10k.zsh $HOME/.p10k.zsh
+    if [ -d "$HOME/.ddev/homeadditions" ]
+    then
+        echo "==========================================================="
+        echo "             adding .dotfiles to homeadditions             "
+        echo "-----------------------------------------------------------"
+        cat .gitconfig > $HOME/.ddev/homeadditions/.gitconfig
+        cat .bashrc > $HOME/.ddev/homeadditions/.bashrc
+        cat .p10k.zsh > $HOME/.ddev/homeadditions/.p10k.zsh
+        cat .zshrc > $HOME/.ddev/homeadditions/.zshrc
+        cat config.local.yaml > /workspaces/NJC/.ddev/config.local.yaml
+        cp -Lr $HOME/.oh-my-zsh $HOME/.ddev/homeadditions
+    fi
 }
 
 # change time zone
@@ -41,17 +65,10 @@ echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
 echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zshrc
 echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
-# fix permissions
-sudo chmod -R g-s $HOME/.oh-my-zsh
+# restart ddev to apply the .dotfile changes and then ssh into the container
+if [ -d "/workspaces/NJC" ]
+then
+    ln -s $HOME/.gitconfig $HOME/.ddev/homeadditions/.gitconfig
+    cd /workspaces/NJC && ddev restart
+fi
 
-# symlink to ddev homeadditions to they get copied into container
-sudo ln -fs $HOME/.p10k.zsh $HOME/.ddev/homeadditions/.p10k.zsh
-sudo ln -fs $HOME/.zshrc $HOME/.ddev/homeadditions/.zshrc
-# sudo ln -fs $HOME/.gitconfig $HOME/.ddev/homeadditions/.gitconfig
-sudo ln -fs $HOME/.bashrc $HOME/.ddev/homeadditions/.bashrc
-sudo ln -fs $HOME/.oh-my-zsh $HOME/.ddev/homeadditions/
-sudo ln -fs $HOME/config.local.yaml $HOME/.ddev/homeadditions/config.local.yaml
-
-sudo chown -R codespace:codespace $HOME/.ddev/homeadditions
-
-ddev restart
