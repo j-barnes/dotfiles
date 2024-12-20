@@ -47,28 +47,8 @@ zshrc() {
         cat .bashrc > $HOME/.ddev/homeadditions/.bashrc
         cat .p10k.zsh > $HOME/.ddev/homeadditions/.p10k.zsh
         cat .zshrc > $HOME/.ddev/homeadditions/.zshrc
-        cat config.local.yaml > /workspaces/NJC/.ddev/config.local.yaml
         cp -Lr $HOME/.oh-my-zsh $HOME/.ddev/homeadditions
     fi
 }
 
-# change time zone
-sudo ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
-sudo dpkg-reconfigure --frontend noninteractive tzdata
-
 zshrc
-
-# make directly highlighting readable - needs to be after zshrc line
-echo "" >> ~/.zshrc
-echo "# remove ls and directory completion highlight color" >> ~/.zshrc
-echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
-echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zshrc
-echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
-
-# restart ddev to apply the .dotfile changes and then ssh into the container
-if [ -d "/workspaces/NJC" ]
-then
-    ln -s $HOME/.gitconfig $HOME/.ddev/homeadditions/.gitconfig
-    cd /workspaces/NJC && ddev restart
-fi
-
